@@ -10,6 +10,10 @@ const vendorRoute = require("./src/Routes/vendor");
 const vehicleRoute = require("./src/Routes/vehicle");
 const jobRoute = require("./src/Routes/job");
 const accountRoute = require("./src/Routes/acocunt");
+const inventoryRoute = require("./src/Routes/Inventory");
+const productRoute = require("./src/Routes/Product");
+const toolRoute = require("./src/Routes/Tool");
+const expenseRoute = require("./src/Routes/Expense");
 
 mongoose
   .connect(process.env.DATABASE_URL, {
@@ -18,9 +22,12 @@ mongoose
     useCreateIndex: true,
   })
   .then((response) => {
-    console.log("database Connected");
+    console.log(
+      "Database Status",
+      response.connections[0].states[response.connections[0]._readyState]
+    );
   })
-  .catch((err) => console.log(err));
+  .catch((err) => console.log("ERROR", err));
 mongoose.Promise = global.Promise;
 
 app.use(morgan("dev"));
@@ -58,6 +65,11 @@ app.use("/api/vendor", vendorRoute);
 app.use("/api/vehicle", vehicleRoute);
 app.use("/api/job", jobRoute);
 app.use("/api/account", accountRoute);
+app.use("/api/inventory", inventoryRoute);
+app.use("/api/product", productRoute);
+app.use("/api/tool", toolRoute);
+app.use("/api/expense", expenseRoute);
+
 //Routes
 /**
  * @swagger
